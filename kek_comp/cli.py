@@ -43,6 +43,7 @@ def main(argv: list[str] | None = None) -> int:
         for token in result.tokens:
             if token.type != TokenType.EOF:
                 print(f"{token.type.name} {token.value!r} [{token.line}:{token.column}]")
+        return 0
 
     for error in result.parser_errors:
         print(error)

@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from contextlib import redirect_stdout
+from io import StringIO
+
+from kek_comp.cli import main
 from kek_comp.interpreter import TreeInterpreter
 from kek_comp.lexer import Lexer
 from kek_comp.pipeline import analyze_source
@@ -123,6 +127,16 @@ def test_kek_builtin_prints_with_prefix():
     assert parser_errors == []
     assert semantic_errors == []
     assert output == ["kek: parser"]
+
+
+def test_tokens_mode_does_not_run_program():
+    stream = StringIO()
+    with redirect_stdout(stream):
+        exit_code = main(["--tokens", "examples/arrays.kek"])
+    text = stream.getvalue()
+    assert exit_code == 0
+    assert "LBRACKET '['" in text
+    assert "[1, 9, 3]" not in text
 
 
 def test_semantic_errors_from_lab_examples():
