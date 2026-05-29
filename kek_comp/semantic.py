@@ -25,6 +25,7 @@ from .ast_nodes import (
     VariableExpression,
     WhileStatement,
 )
+from .builtins import BUILTIN_ARITY
 from .token import TokenType
 
 
@@ -95,6 +96,8 @@ class SemanticAnalyzer:
         self.environment = SemanticEnvironment()
         self.errors: list[str] = []
         self.warnings: list[str] = []
+        for name, arity in BUILTIN_ARITY.items():
+            self.environment.define_function(name, arity)
 
     def analyze(self, statements: list[Statement]) -> SemanticResult:
         for statement in statements:

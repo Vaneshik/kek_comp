@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from .builtins import KEK_HELP
 from .errors import KekError
 from .generator import RandomProgramGenerator
 from .interpreter import TreeInterpreter
@@ -17,7 +18,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--generate", nargs="*", metavar=("OUTPUT", "COUNT"), help="generate a random .kek program")
     parser.add_argument("--tokens", action="store_true", help="print tokens")
     parser.add_argument("--ast", action="store_true", help="print AST")
+    parser.add_argument("--kek", action="store_true", help="print kek-specific language features")
     args = parser.parse_args(argv)
+
+    if args.kek:
+        print(KEK_HELP.strip())
+        return 0
 
     if args.generate is not None:
         return _generate(args.generate)

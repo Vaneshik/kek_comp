@@ -207,6 +207,12 @@ class TreeInterpreter:
         raise RuntimeKekError("[Runtime Error] Неизвестный бинарный оператор.")
 
     def _call(self, expression: CallExpression) -> object | None:
+        if expression.callee_name == "kek":
+            arguments = [self._evaluate(argument) for argument in expression.arguments]
+            value = arguments[0] if arguments else None
+            self._write(f"kek: {self._format_value(value)}")
+            return None
+
         function = self.environment.get_function(expression.callee_name)
         arguments = [self._evaluate(argument) for argument in expression.arguments]
         call_environment = RuntimeEnvironment(self.environment)

@@ -45,6 +45,12 @@ python3 -m kek_comp --generate generated.kek 20
 python3 -m kek_comp --help
 ```
 
+Показать кековые фишки языка:
+
+```bash
+python3 -m kek_comp --kek
+```
+
 ## Пример `.kek`
 
 ```kek
@@ -55,6 +61,29 @@ var nums = [1, 2, 3];
 print words[0];
 nums[1] = x + 32;
 print nums;
+```
+
+## Кековые фишки
+
+Название должно хоть немного работать на проект, поэтому в языке есть маленький встроенный прикол:
+
+```kek
+var memes = ["lexer", "parser", "semantic"];
+kek(memes[1]);
+```
+
+Вывод:
+
+```text
+kek: parser
+```
+
+`kek(value)` ведет себя как встроенная функция вывода с префиксом `kek:`. Её можно использовать с числами, строками, boolean-значениями, массивами и результатами пользовательских функций.
+
+Запустить демку:
+
+```bash
+python3 -m kek_comp examples/kek_features.kek
 ```
 
 ## Что поддерживается
@@ -104,6 +133,7 @@ print nums;
 Runtime/interpreter-слой:
 
 - выполняет переменные, блоки, `if`, `while`, функции и `return`;
+- поддерживает встроенную функцию `kek(value)`;
 - поддерживает массивы;
 - достает значения по индексу;
 - записывает значения по индексу;
@@ -114,6 +144,7 @@ Runtime/interpreter-слой:
 
 ```text
 kek_comp
+├── builtins.py        # встроенные функции и справка по kek-фишкам
 ├── generator.py       # генератор случайных .kek программ
 ├── interpreter.py     # runtime environment и tree interpreter
 ├── lexer.py           # lexer

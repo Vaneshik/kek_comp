@@ -113,6 +113,18 @@ def test_arrays_indexing_and_assignment():
     assert output == ["kek", "[1, 42, 3]"]
 
 
+def test_kek_builtin_prints_with_prefix():
+    output, parser_errors, semantic_errors = run(
+        """
+        var memes = ["lexer", "parser", "semantic"];
+        kek(memes[1]);
+        """
+    )
+    assert parser_errors == []
+    assert semantic_errors == []
+    assert output == ["kek: parser"]
+
+
 def test_semantic_errors_from_lab_examples():
     result = analyze_source(
         """
